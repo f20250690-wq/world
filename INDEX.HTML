@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Little World 💕</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --rose: #E8637A;
+  --blush: #F4B8C3;
+  --petal: #FDE8ED;
+  --deep: #8B2252;
+  --cream: #FFF8F0;
+  --gold: #C9845A;
+  --text: #3A1F2E;
+  --muted: #9B7080;
+  --card: rgba(255,255,255,0.72);
+  --card-border: rgba(232,99,122,0.18);
+  --shadow: rgba(139,34,82,0.12);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--cream);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* ── ANIMATED BACKGROUND ── */
+.bg-canvas {
+  position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none;
+}
+.bg-canvas::before {
+  content:'';
+  position:absolute; inset:0;
+  background:
+    radial-gradient(ellipse 80% 60% at 15% 10%, rgba(244,184,195,0.45) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 85% 80%, rgba(232,99,122,0.2) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 70% at 50% 50%, rgba(253,232,237,0.6) 0%, transparent 70%);
+}
+
+/* floating hearts */
+.heart-float {
+  position: absolute;
+  animation: floatHeart linear infinite;
+  opacity: 0;
+  pointer-events: none;
+  font-size: 1.1rem;
+  filter: blur(0.3px);
+}
+@keyframes floatHeart {
+  0%   { transform: translateY(100vh) rotate(-15deg) scale(0.5); opacity:0; }
+  8%   { opacity: 0.35; }
+  90%  { opacity: 0.15; }
+  100% { transform: translateY(-8vh) rotate(15deg) scale(1.1); opacity:0; }
+}
+
+/* petals */
+.petal-fall {
+  position: absolute;
+  width: 10px; height: 14px;
+  border-radius: 50% 5px 50% 5px;
+  animation: petalDrop linear infinite;
+  opacity: 0;
+}
+@keyframes petalDrop {
+  0%   { transform: translateY(-20px) rotate(0deg); opacity:0; }
+  10%  { opacity:0.6; }
+  100% { transform: translateY(110vh) rotate(360deg); opacity:0; }
+}
+
+/* ── HEADER ── */
+header {
+  position: relative; z-index: 10;
+  text-align: center;
+  padding: 2.5rem 1rem 1.5rem;
+}
+
+.header-deco {
+  font-size: 2rem;
+  animation: heartbeat 1.6s ease-in-out infinite;
+  display: inline-block;
+}
+@keyframes heartbeat {
+  0%,100% { transform: scale(1); }
+  14%     { transform: scale(1.18); }
+  28%     { transform: scale(1); }
+  42%     { transform: scale(1.12); }
+}
+
+header h1 {
+  font-family: 'Dancing Script', cursive;
+  font-size: clamp(2.6rem, 8vw, 5rem);
+  color: var(--rose);
+  text-shadow: 0 2px 20px rgba(232,99,122,0.3);
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+}
+header p {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  color: var(--muted);
+  font-size: clamp(0.85rem, 2vw, 1rem);
+  margin-top: 0.3rem;
+  letter-spacing: 0.12em;
+}
+
+/* ── WHO AM I BAR ── */
+.identity-bar {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  padding: 0.75rem 1rem 1.25rem;
+  position: relative; z-index: 10;
+  flex-wrap: wrap;
+}
+
+.id-btn {
+  display: flex; align-items: center; gap: 0.5rem;
+  padding: 0.55rem 1.4rem;
+  border-radius: 50px;
+  border: 1.5px solid var(--card-border);
+  background: var(--card);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  color: var(--muted);
+  transition: all 0.3s;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 2px 12px var(--shadow);
+}
+.id-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px var(--shadow); }
+.id-btn.him.active {
+  background: linear-gradient(135deg, #3A7BD5, #5B9BD5);
+  border-color: #3A7BD5;
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(58,123,213,0.35);
+}
+.id-btn.her.active {
+  background: linear-gradient(135deg, var(--rose), var(--deep));
+  border-color: var(--rose);
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(232,99,122,0.4);
+}
+
+.avatar {
+  width: 30px; height: 30px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem;
+}
+.avatar.him { background: rgba(58,123,213,0.15); }
+.avatar.her { background: rgba(232,99,122,0.15); }
+
+/* ── MEET BANNER ── */
+.meet-banner {
+  margin: 0 1.5rem 1.5rem;
+  background: linear-gradient(135deg, rgba(255,255,255,0.8), rgba(253,232,237,0.9));
+  border: 1.5px solid var(--rose);
+  border-radius: 16px;
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  position: relative; z-index: 10;
+  box-shadow: 0 4px 20px var(--shadow);
+  backdrop-filter: blur(10px);
+  max-width: 1300px;
+  margin-left: auto; margin-right: auto;
+}
+.meet-icon {
+  width: 46px; height: 46px;
+  background: linear-gradient(135deg, #00897B, #26A69A);
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(0,137,123,0.3);
+  animation: pulse-meet 2s ease-in-out infinite;
+}
+@keyframes pulse-meet {
+  0%,100% { box-shadow: 0 4px 12px rgba(0,137,123,0.3); }
+  50%     { box-shadow: 0 4px 24px rgba(0,137,123,0.55); }
+}
+.meet-info { flex: 1; min-width: 150px; }
+.meet-info h3 { font-weight: 600; font-size: 0.95rem; color: var(--text); }
+.meet-info p  { font-size: 0.78rem; color: var(--muted); margin-top: 2px; }
+.meet-input {
+  flex: 1; min-width: 180px;
+  background: rgba(255,255,255,0.8);
+  border: 1px solid rgba(232,99,122,0.25);
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.2s;
+}
+.meet-input:focus { border-color: var(--rose); }
+.meet-input::placeholder { color: var(--muted); opacity: 0.7; }
+.btn-meet {
+  background: linear-gradient(135deg, #00897B, #26A69A);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 0.6rem 1.3rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+  text-decoration: none;
+  display: inline-flex; align-items: center; gap: 0.4rem;
+}
+.btn-meet:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(0,137,123,0.35); }
+
+/* ── MAIN GRID ── */
+main {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  padding: 0 1.5rem 1.5rem;
+  max-width: 1300px;
+  margin: 0 auto;
+  position: relative; z-index: 5;
+}
+@media (max-width: 800px) {
+  main { grid-template-columns: 1fr; padding: 0 1rem 1rem; }
+  .photo-wall { grid-column: 1; }
+}
+.photo-wall { grid-column: 1 / -1; }
+
+/* ── CARDS ── */
+.card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 20px;
+  backdrop-filter: blur(14px);
+  box-shadow: 0 4px 30px var(--shadow);
+  overflow: hidden;
+  animation: cardIn 0.5s ease both;
+}
+.card:nth-child(1) { animation-delay: 0.05s; }
+.card:nth-child(2) { animation-delay: 0.1s; }
+.card:nth-child(3) { animation-delay: 0.15s; }
+.card:nth-child(4) { animation-delay: 0.2s; }
+@keyframes cardIn {
+  from { opacity:0; transform: translateY(16px); }
+  to   { opacity:1; transform: none; }
+}
+
+.card-header {
+  padding: 1.1rem 1.4rem 0.85rem;
+  border-bottom: 1px solid rgba(232,99,122,0.1);
+  display: flex; align-items: center; gap: 0.75rem;
+}
+.card-icon {
+  width: 38px; height: 38px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+.card-icon.him-icon { background: rgba(58,123,213,0.12); }
+.card-icon.her-icon { background: rgba(232,99,122,0.12); }
+.card-icon.shared-icon { background: rgba(201,132,90,0.12); }
+
+.card-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+}
+.card-subtitle { font-size: 0.75rem; color: var(--muted); margin-top: 1px; }
+.card-body { padding: 1.2rem 1.4rem; }
+
+/* ── ADD TASK ── */
+.add-row { display: flex; gap: 0.5rem; margin-bottom: 0.9rem; flex-wrap: wrap; }
+.add-row input {
+  flex: 1; min-width: 120px;
+  background: rgba(255,255,255,0.7);
+  border: 1px solid rgba(232,99,122,0.2);
+  border-radius: 10px;
+  padding: 0.55rem 0.8rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.88rem;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.add-row input:focus { border-color: var(--rose); box-shadow: 0 0 0 3px rgba(232,99,122,0.12); }
+.add-row input::placeholder { color: var(--muted); opacity:0.6; }
+.prio-sel {
+  background: rgba(255,255,255,0.7);
+  border: 1px solid rgba(232,99,122,0.2);
+  border-radius: 10px;
+  padding: 0.55rem 0.5rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.82rem;
+  color: var(--text);
+  outline: none;
+  cursor: pointer;
+  width: 90px;
+}
+.time-input {
+  background: rgba(255,255,255,0.7);
+  border: 1px solid rgba(232,99,122,0.2);
+  border-radius: 10px;
+  padding: 0.55rem 0.6rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.82rem;
+  color: var(--text);
+  outline: none;
+  width: 100px;
+}
+
+.btn-add {
+  background: linear-gradient(135deg, var(--rose), var(--deep));
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 0.55rem 1rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.btn-add.him-btn { background: linear-gradient(135deg, #3A7BD5, #5B9BD5); }
+.btn-add:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(232,99,122,0.35); }
+.btn-add:active { transform: scale(0.97); }
+
+/* ── PROGRESS BAR ── */
+.prog-wrap { margin-bottom: 1rem; }
+.prog-label { display:flex; justify-content:space-between; font-size:0.75rem; color:var(--muted); margin-bottom:0.35rem; }
+.prog-track { height:5px; background:rgba(232,99,122,0.1); border-radius:3px; overflow:hidden; }
+.prog-fill {
+  height:100%; border-radius:3px;
+  background: linear-gradient(90deg, var(--blush), var(--rose));
+  transition: width 0.8s cubic-bezier(0.4,0,0.2,1);
+}
+.prog-fill.him-fill { background: linear-gradient(90deg, #9EC5F5, #3A7BD5); }
+
+/* ── TASK ITEMS ── */
+.task-list { list-style:none; max-height: 300px; overflow-y: auto; padding-right: 2px; }
+.task-list::-webkit-scrollbar { width:3px; }
+.task-list::-webkit-scrollbar-thumb { background: var(--blush); border-radius:2px; }
+
+.task-item {
+  display:flex; align-items:center; gap:0.65rem;
+  padding: 0.6rem 0.75rem;
+  margin-bottom: 0.4rem;
+  background: rgba(255,255,255,0.55);
+  border: 1px solid rgba(232,99,122,0.1);
+  border-radius: 12px;
+  transition: all 0.2s;
+  animation: taskSlide 0.3s ease;
+}
+@keyframes taskSlide { from { opacity:0; transform:translateX(-8px); } to { opacity:1; transform:none; } }
+.task-item:hover { background: rgba(255,255,255,0.85); box-shadow: 0 2px 10px var(--shadow); }
+
+.task-check {
+  width:20px; height:20px;
+  border-radius:50%;
+  border: 2px solid var(--blush);
+  flex-shrink:0; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  transition: all 0.2s;
+  font-size: 0.7rem;
+}
+.task-check.done { background: var(--rose); border-color: var(--rose); color:#fff; }
+.task-check.him-done { background: #3A7BD5; border-color: #3A7BD5; color:#fff; }
+
+.task-info { flex:1; min-width:0; }
+.task-text { font-size:0.88rem; font-weight:500; transition: all 0.2s; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.task-text.done { text-decoration:line-through; color:var(--muted); }
+.task-meta { display:flex; align-items:center; gap:0.4rem; margin-top:2px; }
+.task-time { font-size:0.7rem; color:var(--muted); }
+
+.prio-badge {
+  font-size: 0.6rem;
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  flex-shrink:0;
+}
+.prio-high { background:#FFE8E8; color:#C0392B; border:1px solid rgba(192,57,43,0.2); }
+.prio-med  { background:#FFF3E0; color:#E67E22; border:1px solid rgba(230,126,34,0.2); }
+.prio-low  { background:#E8F5E9; color:#27AE60; border:1px solid rgba(39,174,96,0.2); }
+
+.task-del {
+  background:none; border:none; cursor:pointer;
+  color: rgba(200,100,100,0.35); font-size:0.85rem;
+  padding:2px 4px; transition:color 0.2s; flex-shrink:0;
+}
+.task-del:hover { color: var(--rose); }
+
+.empty-state {
+  text-align:center; color:var(--muted);
+  font-size:0.82rem; padding:1.5rem 0;
+  font-family:'Playfair Display',serif; font-style:italic;
+}
+.empty-state span { display:block; font-size:1.8rem; margin-bottom:0.4rem; }
+
+/* ── PHOTO WALL ── */
+.photo-wall .card-body { padding: 1.2rem; }
+
+.upload-zone {
+  border: 2px dashed rgba(232,99,122,0.35);
+  border-radius: 14px;
+  padding: 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-bottom: 1rem;
+  background: rgba(253,232,237,0.3);
+  position: relative;
+}
+.upload-zone:hover { border-color: var(--rose); background: rgba(253,232,237,0.6); }
+.upload-zone input[type="file"] { position:absolute; inset:0; opacity:0; cursor:pointer; width:100%; height:100%; }
+.upload-zone p { font-size:0.85rem; color:var(--muted); margin-top:0.3rem; }
+.upload-zone .up-icon { font-size:2rem; }
+
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 0.75rem;
+}
+.photo-item {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 3px 12px var(--shadow);
+  animation: photoIn 0.4s ease;
+  cursor: pointer;
+  border: 2px solid rgba(255,255,255,0.8);
+}
+@keyframes photoIn { from { opacity:0; transform:scale(0.85); } to { opacity:1; transform:none; } }
+.photo-item img { width:100%; height:100%; object-fit:cover; display:block; }
+.photo-item .photo-overlay {
+  position:absolute; inset:0;
+  background: rgba(139,34,82,0.55);
+  display:flex; align-items:center; justify-content:center;
+  opacity:0; transition:opacity 0.2s;
+  gap:0.5rem;
+}
+.photo-item:hover .photo-overlay { opacity:1; }
+.photo-del-btn {
+  background:rgba(255,255,255,0.2); border:none; border-radius:50%;
+  width:30px; height:30px; cursor:pointer; color:#fff; font-size:0.8rem;
+  display:flex; align-items:center; justify-content:center;
+  transition:background 0.2s;
+}
+.photo-del-btn:hover { background:rgba(255,255,255,0.4); }
+
+.photo-caption {
+  position:absolute; bottom:0; left:0; right:0;
+  padding:0.35rem 0.5rem;
+  background: linear-gradient(transparent, rgba(0,0,0,0.55));
+  color:#fff; font-size:0.65rem; font-weight:500;
+  text-align:center;
+}
+
+/* ── NOTIFICATION TOAST ── */
+.toast-container { position:fixed; bottom:1.5rem; right:1.5rem; z-index:999; display:flex; flex-direction:column; gap:0.5rem; }
+.toast {
+  background: rgba(255,255,255,0.92);
+  border: 1px solid var(--card-border);
+  border-left: 4px solid var(--rose);
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  box-shadow: 0 4px 20px var(--shadow);
+  backdrop-filter: blur(14px);
+  max-width: 280px;
+  animation: toastIn 0.35s ease, toastOut 0.35s ease 3.5s forwards;
+  font-size: 0.82rem;
+}
+.toast.him-toast { border-left-color: #3A7BD5; }
+.toast strong { display:block; margin-bottom:2px; color:var(--text); font-size:0.85rem; }
+.toast span { color:var(--muted); }
+@keyframes toastIn  { from { opacity:0; transform:translateX(20px); } to { opacity:1; transform:none; } }
+@keyframes toastOut { from { opacity:1; } to { opacity:0; transform:translateX(20px); } }
+
+/* ── SHARED BOARD ── */
+.note-input {
+  width:100%; resize:vertical; min-height:80px;
+  background:rgba(255,255,255,0.7);
+  border:1px solid rgba(232,99,122,0.2);
+  border-radius:12px;
+  padding:0.75rem;
+  font-family:'DM Sans',sans-serif;
+  font-size:0.88rem;
+  color:var(--text);
+  outline:none;
+  margin-bottom:0.75rem;
+  transition:border-color 0.2s;
+}
+.note-input:focus { border-color:var(--rose); }
+.note-item {
+  padding:0.75rem;
+  background:rgba(253,232,237,0.5);
+  border:1px solid rgba(232,99,122,0.12);
+  border-radius:12px;
+  margin-bottom:0.5rem;
+  animation:taskSlide 0.3s ease;
+  position:relative;
+}
+.note-item.him-note { background:rgba(235,245,255,0.6); border-color:rgba(58,123,213,0.12); }
+.note-header { display:flex; align-items:center; gap:0.5rem; margin-bottom:0.35rem; }
+.note-avatar {
+  width:22px; height:22px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-size:0.75rem; flex-shrink:0;
+}
+.note-avatar.her-av { background:rgba(232,99,122,0.2); }
+.note-avatar.him-av { background:rgba(58,123,213,0.2); }
+.note-who { font-size:0.75rem; font-weight:600; }
+.note-time { font-size:0.68rem; color:var(--muted); margin-left:auto; }
+.note-text { font-size:0.85rem; line-height:1.5; }
+.note-del { position:absolute; top:0.5rem; right:0.5rem; background:none; border:none; cursor:pointer; color:rgba(200,100,100,0.3); font-size:0.75rem; transition:color 0.2s; }
+.note-del:hover { color:var(--rose); }
+
+/* ── DAY COUNTER ── */
+.love-stats {
+  display:flex; gap:0.75rem; flex-wrap:wrap;
+}
+.love-stat {
+  flex:1; min-width:80px;
+  background:rgba(253,232,237,0.5);
+  border:1px solid rgba(232,99,122,0.1);
+  border-radius:14px;
+  padding:0.75rem;
+  text-align:center;
+}
+.love-stat .val {
+  font-family:'Dancing Script',cursive;
+  font-size:2rem;
+  color:var(--rose);
+  line-height:1;
+}
+.love-stat .lbl { font-size:0.68rem; color:var(--muted); margin-top:3px; letter-spacing:0.08em; }
+
+/* scrollbars global */
+::-webkit-scrollbar { width:4px; }
+::-webkit-scrollbar-track { background:transparent; }
+::-webkit-scrollbar-thumb { background:rgba(232,99,122,0.3); border-radius:2px; }
+
+select option { background:#fff; color:var(--text); }
+
+/* ── PHOTO LIGHTBOX ── */
+.lightbox {
+  position:fixed; inset:0; z-index:500;
+  background:rgba(58,31,46,0.88);
+  display:flex; align-items:center; justify-content:center;
+  backdrop-filter:blur(6px);
+  cursor:zoom-out;
+  padding:1rem;
+}
+.lightbox img { max-width:90vw; max-height:90vh; border-radius:12px; box-shadow:0 8px 40px rgba(0,0,0,0.5); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 480px) {
+  header h1 { font-size:2.5rem; }
+  .meet-banner { flex-direction:column; }
+  .add-row { flex-direction:column; }
+  .add-row input, .prio-sel, .time-input { width:100%; }
+  .btn-add { width:100%; justify-content:center; }
+}
+</style>
+</head>
+<body>
+
+<!-- BACKGROUND -->
+<div class="bg-canvas" id="bg-canvas"></div>
+
+<!-- HEADER -->
+<header>
+  <div class="header-deco">💕</div>
+  <h1>Our Little World</h1>
+  <p>a shared space for just the two of us</p>
+  <div style="margin-top:0.6rem; font-size:0.8rem; color:var(--muted); font-family:'DM Sans',sans-serif;" id="clock-display"></div>
+</header>
+
+<!-- WHO AM I -->
+<div class="identity-bar">
+  <button class="id-btn him" id="btn-him" onclick="setUser('him')">
+    <div class="avatar him">💙</div> I'm Him
+  </button>
+  <button class="id-btn her active" id="btn-her" onclick="setUser('her')">
+    <div class="avatar her">💗</div> I'm Her
+  </button>
+</div>
+
+<!-- MEET BANNER -->
+<div style="padding: 0 1.5rem; max-width:1300px; margin:0 auto 1.5rem; position:relative;z-index:10;">
+<div class="meet-banner">
+  <div class="meet-icon">📹</div>
+  <div class="meet-info">
+    <h3>Video Date 💌</h3>
+    <p>Paste your Google Meet link and join together</p>
+  </div>
+  <input class="meet-input" type="text" id="meet-link" placeholder="https://meet.google.com/xxx-xxxx-xxx" oninput="saveMeetLink()">
+  <a class="btn-meet" id="meet-btn" href="#" onclick="joinMeet(event)">📹 Join Together</a>
+</div>
+</div>
+
+<!-- MAIN -->
+<main>
+
+  <!-- HIM TASKS -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon him-icon">💙</div>
+      <div>
+        <div class="card-title">His Tomorrow</div>
+        <div class="card-subtitle" id="him-count">0 of 0 done</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="add-row" id="him-add-row">
+        <input type="text" id="him-task-input" placeholder="Add tomorrow's plan…" onkeypress="if(event.key==='Enter') addTask('him')">
+        <input type="time" class="time-input" id="him-time" value="09:00">
+        <select class="prio-sel" id="him-prio">
+          <option value="high">🔴 HIGH</option>
+          <option value="med" selected>🟡 MED</option>
+          <option value="low">🟢 LOW</option>
+        </select>
+        <button class="btn-add him-btn" onclick="addTask('him')">+ Add</button>
+      </div>
+      <div class="prog-wrap">
+        <div class="prog-label"><span>Progress</span><span id="him-pct">0%</span></div>
+        <div class="prog-track"><div class="prog-fill him-fill" id="him-prog" style="width:0%"></div></div>
+      </div>
+      <ul class="task-list" id="him-list">
+        <li class="empty-state"><span>💙</span>His plans will appear here…</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- HER TASKS -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon her-icon">💗</div>
+      <div>
+        <div class="card-title">Her Tomorrow</div>
+        <div class="card-subtitle" id="her-count">0 of 0 done</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="add-row" id="her-add-row">
+        <input type="text" id="her-task-input" placeholder="Add tomorrow's plan…" onkeypress="if(event.key==='Enter') addTask('her')">
+        <input type="time" class="time-input" id="her-time" value="09:00">
+        <select class="prio-sel" id="her-prio">
+          <option value="high">🔴 HIGH</option>
+          <option value="med" selected>🟡 MED</option>
+          <option value="low">🟢 LOW</option>
+        </select>
+        <button class="btn-add" onclick="addTask('her')">+ Add</button>
+      </div>
+      <div class="prog-wrap">
+        <div class="prog-label"><span>Progress</span><span id="her-pct">0%</span></div>
+        <div class="prog-track"><div class="prog-fill" id="her-prog" style="width:0%"></div></div>
+      </div>
+      <ul class="task-list" id="her-list">
+        <li class="empty-state"><span>💗</span>Her plans will appear here…</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- SHARED NOTES / LOVE BOARD -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon shared-icon">📝</div>
+      <div>
+        <div class="card-title">Love Notes & Updates</div>
+        <div class="card-subtitle">Tell each other what's on your mind</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <textarea class="note-input" id="note-input" placeholder="Write a note, update, or sweet message… 💌"></textarea>
+      <button class="btn-add" id="note-btn" onclick="addNote()" style="margin-bottom:1rem;width:100%;justify-content:center;display:flex;">
+        💌 Post Note
+      </button>
+      <div id="notes-list" style="max-height:260px;overflow-y:auto;padding-right:2px;">
+        <div class="empty-state"><span>💌</span>Notes from each other will appear here…</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LOVE STATS -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon her-icon">💞</div>
+      <div>
+        <div class="card-title">Our Story in Numbers</div>
+        <div class="card-subtitle">Every day counts 💕</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="love-stats" style="margin-bottom:1rem;">
+        <div class="love-stat"><div class="val" id="days-together">0</div><div class="lbl">DAYS TOGETHER</div></div>
+        <div class="love-stat"><div class="val" id="tasks-done-total">0</div><div class="lbl">TASKS DONE</div></div>
+        <div class="love-stat"><div class="val" id="notes-count">0</div><div class="lbl">LOVE NOTES</div></div>
+      </div>
+      <div style="margin-bottom:1rem;">
+        <div style="font-size:0.75rem;color:var(--muted);margin-bottom:0.4rem;font-weight:600;letter-spacing:0.08em;">ANNIVERSARY DATE</div>
+        <div style="display:flex;gap:0.5rem;align-items:center;">
+          <input type="date" id="anniversary-input" class="time-input" style="flex:1;width:auto;" onchange="saveAnniversary()">
+          <span style="font-size:0.8rem;color:var(--rose);" id="anniversary-msg">Set your date 💕</span>
+        </div>
+      </div>
+      <div style="background:rgba(253,232,237,0.5);border-radius:12px;padding:0.85rem;border:1px solid rgba(232,99,122,0.1);">
+        <div style="font-family:'Dancing Script',cursive;font-size:1.1rem;color:var(--rose);text-align:center;" id="daily-quote">
+          "You are my today and all of my tomorrows." 💕
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHOTO WALL -->
+  <div class="card photo-wall">
+    <div class="card-header">
+      <div class="card-icon her-icon">📸</div>
+      <div>
+        <div class="card-title">Our Photo Wall</div>
+        <div class="card-subtitle" id="photo-count">0 memories</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="upload-zone" id="upload-zone">
+        <input type="file" id="photo-input" accept="image/*" multiple onchange="handlePhotos(event)">
+        <div class="up-icon">📷</div>
+        <div style="font-weight:600;color:var(--rose);margin-top:0.4rem;">Drop your memories here</div>
+        <p>Click to upload photos — they'll appear on your wall 💕</p>
+      </div>
+      <div class="photo-grid" id="photo-grid">
+        <div style="grid-column:1/-1;text-align:center;color:var(--muted);font-style:italic;font-family:'Playfair Display',serif;padding:1rem;font-size:0.9rem;">
+          <span style="display:block;font-size:1.8rem;margin-bottom:0.4rem;">📷</span>
+          Your memories will bloom here…
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- TOAST CONTAINER -->
+<div class="toast-container" id="toasts"></div>
+
+<div style="text-align:center;padding:1.5rem;color:var(--muted);font-size:0.75rem;font-family:'Playfair Display',serif;font-style:italic;position:relative;z-index:5;">
+  made with 💕 just for the two of you
+</div>
+
+<script>
+// ─── STATE ────────────────────────────────────────────────────────────────
+let currentUser = localStorage.getItem('olw_user') || 'her';
+let himTasks  = JSON.parse(localStorage.getItem('olw_him_tasks')  || '[]');
+let herTasks  = JSON.parse(localStorage.getItem('olw_her_tasks')  || '[]');
+let notes     = JSON.parse(localStorage.getItem('olw_notes')      || '[]');
+let photos    = JSON.parse(localStorage.getItem('olw_photos')     || '[]');
+let totalDone = parseInt(localStorage.getItem('olw_total_done')   || '0');
+const quotes  = [
+  '"You are my today and all of my tomorrows." 💕',
+  '"I love you not only for what you are, but for what I am when I am with you." 🌸',
+  '"In all the world, there is no heart for me like yours." 💌',
+  '"I carry your heart with me, I carry it in my heart." 🌹',
+  '"Every love story is beautiful, but ours is my favorite." ✨',
+  '"You\'re the best thing that\'s ever been mine." 💝',
+  '"Together is a wonderful place to be." 🌷',
+];
+
+// ─── BACKGROUND ANIMATIONS ─────────────────────────────────────────────
+(function() {
+  const canvas = document.getElementById('bg-canvas');
+  const heartEmojis = ['💕','💗','💓','💖','🌸','✨','🌹','💌'];
+  const petalColors = ['#F4B8C3','#FDE8ED','#FFCDD2','#F8BBD0','#FCE4EC'];
+  for (let i = 0; i < 28; i++) {
+    const h = document.createElement('div');
+    h.className = 'heart-float';
+    h.textContent = heartEmojis[Math.floor(Math.random()*heartEmojis.length)];
+    h.style.cssText = `left:${Math.random()*100}%;animation-duration:${12+Math.random()*10}s;animation-delay:${Math.random()*15}s;font-size:${0.7+Math.random()*0.8}rem;`;
+    canvas.appendChild(h);
+  }
+  for (let i = 0; i < 18; i++) {
+    const p = document.createElement('div');
+    p.className = 'petal-fall';
+    p.style.cssText = `left:${Math.random()*100}%;background:${petalColors[Math.floor(Math.random()*petalColors.length)]};animation-duration:${8+Math.random()*8}s;animation-delay:${Math.random()*12}s;transform:rotate(${Math.random()*360}deg);`;
+    canvas.appendChild(p);
+  }
+})();
+
+// ─── CLOCK ────────────────────────────────────────────────────────────
+function updateClock() {
+  const now = new Date();
+  document.getElementById('clock-display').textContent =
+    now.toLocaleDateString('en-US', {weekday:'long',year:'numeric',month:'long',day:'numeric'}) +
+    ' · ' + now.toLocaleTimeString('en-US', {hour:'2-digit',minute:'2-digit'});
+}
+updateClock(); setInterval(updateClock, 1000);
+
+// ─── USER ─────────────────────────────────────────────────────────────
+function setUser(who) {
+  currentUser = who;
+  localStorage.setItem('olw_user', who);
+  document.getElementById('btn-him').className = 'id-btn him' + (who==='him' ? ' active' : '');
+  document.getElementById('btn-her').className = 'id-btn her' + (who==='her' ? ' active' : '');
+  toast(`💙 Switched to ${who === 'him' ? 'His' : 'Her'} view`, who);
+}
+setUser(currentUser);
+
+// ─── TOAST ────────────────────────────────────────────────────────────
+function toast(msg, who = 'her', sub = '') {
+  const box = document.getElementById('toasts');
+  const t = document.createElement('div');
+  t.className = 'toast' + (who==='him' ? ' him-toast' : '');
+  t.innerHTML = `<strong>${msg}</strong>${sub ? `<span>${sub}</span>` : ''}`;
+  box.appendChild(t);
+  setTimeout(() => t.remove(), 4000);
+}
+
+// ─── TASKS ────────────────────────────────────────────────────────────
+function save(who) { localStorage.setItem(`olw_${who}_tasks`, JSON.stringify(who==='him'?himTasks:herTasks)); }
+
+function addTask(who) {
+  const inp = document.getElementById(`${who}-task-input`);
+  const time = document.getElementById(`${who}-time`).value;
+  const prio = document.getElementById(`${who}-prio`).value;
+  const text = inp.value.trim();
+  if (!text) return;
+  const task = { id: Date.now(), text, time, prio, done: false, by: currentUser };
+  if (who==='him') himTasks.push(task); else herTasks.push(task);
+  inp.value = '';
+  save(who); renderTasks(who);
+  const whoLabel = who==='him' ? 'His' : 'Her';
+  toast(`📌 Added to ${whoLabel} list`, who, text.slice(0,40));
+  notifyOther(who, `New task: "${text.slice(0,30)}…"`, prio);
+}
+
+function toggleTask(who, id) {
+  const list = who==='him' ? himTasks : herTasks;
+  const t = list.find(t => t.id===id);
+  if (!t) return;
+  t.done = !t.done;
+  if (t.done) {
+    totalDone++;
+    localStorage.setItem('olw_total_done', totalDone);
+    toast(`✅ Task done! Great job 💕`, who, t.text.slice(0,35));
+    notifyOther(who, `Just completed: "${t.text.slice(0,28)}…" ✅`, 'done');
+  }
+  save(who); renderTasks(who); updateStats();
+}
+
+function deleteTask(who, id) {
+  if (who==='him') himTasks = himTasks.filter(t=>t.id!==id);
+  else herTasks = herTasks.filter(t=>t.id!==id);
+  save(who); renderTasks(who);
+}
+
+function renderTasks(who) {
+  const list = who==='him' ? himTasks : herTasks;
+  const ul = document.getElementById(`${who}-list`);
+  const done = list.filter(t=>t.done).length;
+  const pct = list.length ? Math.round(done/list.length*100) : 0;
+  document.getElementById(`${who}-pct`).textContent = pct+'%';
+  document.getElementById(`${who}-prog`).style.width = pct+'%';
+  document.getElementById(`${who}-count`).textContent = `${done} of ${list.length} done`;
+  if (!list.length) {
+    ul.innerHTML = `<li class="empty-state"><span>${who==='him'?'💙':'💗'}</span>${who==='him'?'His':'Her'} plans will appear here…</li>`;
+    return;
+  }
+  const sorted = [...list].sort((a,b)=>a.time.localeCompare(b.time));
+  ul.innerHTML = sorted.map(t => `
+    <li class="task-item">
+      <div class="task-check ${t.done ? (who==='him'?'him-done':'done') : ''}" onclick="toggleTask('${who}',${t.id})">${t.done?'✓':''}</div>
+      <div class="task-info">
+        <div class="task-text ${t.done?'done':''}">${t.text}</div>
+        <div class="task-meta">
+          <span class="task-time">⏰ ${t.time}</span>
+          <span class="prio-badge prio-${t.prio}">${t.prio.toUpperCase()}</span>
+        </div>
+      </div>
+      <button class="task-del" onclick="deleteTask('${who}',${t.id})">✕</button>
+    </li>`).join('');
+  updateStats();
+}
+
+// ─── NOTES ────────────────────────────────────────────────────────────
+function addNote() {
+  const inp = document.getElementById('note-input');
+  const text = inp.value.trim();
+  if (!text) return;
+  const note = {
+    id: Date.now(), text,
+    who: currentUser,
+    time: new Date().toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'})
+  };
+  notes.unshift(note);
+  localStorage.setItem('olw_notes', JSON.stringify(notes));
+  inp.value = '';
+  renderNotes();
+  notifyOther(currentUser, `New love note 💌`, text.slice(0,40));
+  updateStats();
+}
+
+function deleteNote(id) {
+  notes = notes.filter(n=>n.id!==id);
+  localStorage.setItem('olw_notes', JSON.stringify(notes));
+  renderNotes(); updateStats();
+}
+
+function renderNotes() {
+  const el = document.getElementById('notes-list');
+  if (!notes.length) {
+    el.innerHTML = '<div class="empty-state"><span>💌</span>Notes from each other will appear here…</div>';
+    return;
+  }
+  el.innerHTML = notes.map(n => `
+    <div class="note-item ${n.who==='him'?'him-note':''}">
+      <div class="note-header">
+        <div class="note-avatar ${n.who==='him'?'him-av':'her-av'}">${n.who==='him'?'💙':'💗'}</div>
+        <span class="note-who">${n.who==='him'?'Him':'Her'}</span>
+        <span class="note-time">${n.time}</span>
+      </div>
+      <div class="note-text">${n.text}</div>
+      <button class="note-del" onclick="deleteNote(${n.id})">✕</button>
+    </div>`).join('');
+}
+
+// ─── PHOTOS ───────────────────────────────────────────────────────────
+function handlePhotos(e) {
+  const files = Array.from(e.target.files);
+  files.forEach(file => {
+    const reader = new FileReader();
+    reader.onload = ev => {
+      photos.push({ id: Date.now() + Math.random(), src: ev.target.result, name: file.name, by: currentUser });
+      localStorage.setItem('olw_photos', JSON.stringify(photos));
+      renderPhotos();
+      toast(`📸 Photo added to the wall!`, currentUser);
+      updateStats();
+    };
+    reader.readAsDataURL(file);
+  });
+  e.target.value = '';
+}
+
+function deletePhoto(id) {
+  photos = photos.filter(p=>p.id!==id);
+  localStorage.setItem('olw_photos', JSON.stringify(photos));
+  renderPhotos(); updateStats();
+}
+
+function openLightbox(src) {
+  const lb = document.createElement('div');
+  lb.className = 'lightbox';
+  lb.innerHTML = `<img src="${src}">`;
+  lb.onclick = () => lb.remove();
+  document.body.appendChild(lb);
+}
+
+function renderPhotos() {
+  const grid = document.getElementById('photo-grid');
+  document.getElementById('photo-count').textContent = `${photos.length} memor${photos.length===1?'y':'ies'}`;
+  if (!photos.length) {
+    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;color:var(--muted);font-style:italic;font-family:'Playfair Display',serif;padding:1rem;font-size:0.9rem;"><span style="display:block;font-size:1.8rem;margin-bottom:0.4rem;">📷</span>Your memories will bloom here…</div>`;
+    return;
+  }
+  grid.innerHTML = photos.map(p => `
+    <div class="photo-item">
+      <img src="${p.src}" alt="${p.name}" onclick="openLightbox('${p.src.replace(/'/g,"\\'")}')">
+      <div class="photo-overlay">
+        <button class="photo-del-btn" onclick="event.stopPropagation();deletePhoto(${p.id})">✕</button>
+      </div>
+      <div class="photo-caption">${p.by==='him'?'💙':'💗'}</div>
+    </div>`).join('');
+}
+
+// ─── MEET ────────────────────────────────────────────────────────────
+function saveMeetLink() {
+  const val = document.getElementById('meet-link').value.trim();
+  localStorage.setItem('olw_meet', val);
+}
+function joinMeet(e) {
+  e.preventDefault();
+  const link = document.getElementById('meet-link').value.trim();
+  if (!link) { toast('💌 Paste a Google Meet link first!', currentUser); return; }
+  notifyOther(currentUser, '📹 Joining the video date now!', 'Click to join too 💕');
+  window.open(link, '_blank');
+}
+const savedMeet = localStorage.getItem('olw_meet');
+if (savedMeet) document.getElementById('meet-link').value = savedMeet;
+
+// ─── ANNIVERSARY ─────────────────────────────────────────────────────
+function saveAnniversary() {
+  const val = document.getElementById('anniversary-input').value;
+  localStorage.setItem('olw_anniversary', val);
+  updateAnniversary(val);
+}
+function updateAnniversary(val) {
+  if (!val) return;
+  const diff = Math.floor((Date.now() - new Date(val).getTime()) / 86400000);
+  document.getElementById('days-together').textContent = diff;
+  document.getElementById('anniversary-msg').textContent = diff >= 0 ? `${diff} days together 💕` : 'Future date 💕';
+}
+const savedAnn = localStorage.getItem('olw_anniversary');
+if (savedAnn) { document.getElementById('anniversary-input').value = savedAnn; updateAnniversary(savedAnn); }
+
+// ─── STATS ───────────────────────────────────────────────────────────
+function updateStats() {
+  const done = himTasks.filter(t=>t.done).length + herTasks.filter(t=>t.done).length;
+  document.getElementById('tasks-done-total').textContent = done;
+  document.getElementById('notes-count').textContent = notes.length;
+  document.getElementById('photo-count').textContent = `${photos.length} memor${photos.length===1?'y':'ies'}`;
+}
+
+// ─── CROSS-TAB NOTIFY (simulated) ─────────────────────────────────────
+function notifyOther(who, msg, sub = '') {
+  const ev = { who, msg, sub, ts: Date.now() };
+  localStorage.setItem('olw_notify', JSON.stringify(ev));
+}
+window.addEventListener('storage', e => {
+  if (e.key === 'olw_notify') {
+    const ev = JSON.parse(e.newValue);
+    if (ev.who !== currentUser) toast(`${ev.msg}`, ev.who, ev.sub);
+  }
+  if (e.key === 'olw_him_tasks')  { himTasks = JSON.parse(e.newValue||'[]'); renderTasks('him'); }
+  if (e.key === 'olw_her_tasks')  { herTasks = JSON.parse(e.newValue||'[]'); renderTasks('her'); }
+  if (e.key === 'olw_notes')      { notes    = JSON.parse(e.newValue||'[]'); renderNotes(); updateStats(); }
+  if (e.key === 'olw_photos')     { photos   = JSON.parse(e.newValue||'[]'); renderPhotos(); }
+});
+
+// ─── DAILY QUOTE ─────────────────────────────────────────────────────
+document.getElementById('daily-quote').textContent = quotes[new Date().getDate() % quotes.length];
+
+// ─── DRAG & DROP UPLOAD ──────────────────────────────────────────────
+const dropZone = document.getElementById('upload-zone');
+dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.style.borderColor = 'var(--rose)'; dropZone.style.background = 'rgba(232,99,122,0.1)'; });
+dropZone.addEventListener('dragleave', () => { dropZone.style.borderColor = ''; dropZone.style.background = ''; });
+dropZone.addEventListener('drop', e => {
+  e.preventDefault();
+  dropZone.style.borderColor = ''; dropZone.style.background = '';
+  const files = Array.from(e.dataTransfer.files).filter(f=>f.type.startsWith('image/'));
+  files.forEach(file => {
+    const reader = new FileReader();
+    reader.onload = ev => {
+      photos.push({ id: Date.now() + Math.random(), src: ev.target.result, name: file.name, by: currentUser });
+      localStorage.setItem('olw_photos', JSON.stringify(photos));
+      renderPhotos(); updateStats();
+    };
+    reader.readAsDataURL(file);
+  });
+  toast(`📸 ${files.length} photo(s) added!`, currentUser);
+});
+
+// ─── INIT ────────────────────────────────────────────────────────────
+renderTasks('him');
+renderTasks('her');
+renderNotes();
+renderPhotos();
+updateStats();
+</script>
+</body>
+</html>
